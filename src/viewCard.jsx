@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import App from './App';
-import Welcome from './welcome';
-import EditTask from './editTask.jsx';
-import List from './list';
+import Welcome from './Welcome';
+import List from './List';
 
 class ViewCard extends Component {
     render() {
@@ -13,8 +11,12 @@ class ViewCard extends Component {
                         View Todos
                     </div>
 
-                    <Welcome />
-                    <List {...this.props}/>
+                    {this.props.tasks.length === 0 && <Welcome />}
+                    <List 
+                        tasks={this.props.tasks}
+                        removeTask={this.props.removeTask}
+                        updateTask={this.props.updateTask}
+                    />
                     
 
                 </div>

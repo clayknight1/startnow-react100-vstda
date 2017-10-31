@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import App from './App';
-import ViewCard from './viewCard';
-
 
 class Welcome extends Component {
     render() {

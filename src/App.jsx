@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import AddTodo from './addTodo';
-import ViewCard from './viewCard';
-import EditTask from './editTask.jsx';
+import AddTodo from './AddTask';
+import ViewCard from './ViewCard';
 
-
+let counter = 0;
 
 class App extends Component {
   constructor(props) {
@@ -22,71 +21,43 @@ class App extends Component {
       tasks: [],
       hideEditor: true
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.addTodo = this.addTodo.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
-    this.toggleEditor = this.toggleEditor.bind(this);
-    this.updateHandleChange = this.updateHandleChange.bind(this);
-    this.editTask = this.editTask.bind(this);
+    this.updateTask = this.updateTask.bind(this);
 
   };
-  handleChange(event) {
-    let newObj = Object.assign({}, this.state.newTask);
-    newObj[event.target.name] = event.target.value;
+
+  addTodo(description, priority) {
+    const newestTask = {
+      text: description,
+      priority: priority,
+      id: counter++
+    };
+    
     this.setState({
-      newTask: newObj,
-    });
-  };
-  handleClick(event) {
-    event.preventDefault();
-    let newestTask = this.state.newTask;
-    let taskLength = this.state.tasks.length;
-    newestTask.position = taskLength;
-    this.setState({
-      tasks: [...this.state.tasks, newestTask],
-      newTask: {
-        text: '',
-        priority: 1,
-        position: taskLength + 1
-      }
+      tasks: [...this.state.tasks, newestTask]
     })
   }
-  deleteTask(e) {
-    let name = parseInt(e.currentTarget.name);
-    let newTasks = this.state.tasks;
-    newTasks.splice(name, 1);
+
+  deleteTask(id) {
+    const newTasks = this.state.tasks.slice();
+    const taskIndex = newTasks.findIndex(task => task.id === id);
+    newTasks.splice(taskIndex, 1);
     
     this.setState({
       tasks: newTasks
-    })
+    });
   }
 
-  updateHandleChange(event) {
-    let newUpdate = Object.assign({}, this.state.updateTask);
-    newUpdate[event.target.name] = event.target.value;
-    this.setState({
-      updateTask: newUpdate
-    });
-    
-  }
-  editTask(event) {
-    event.preventDefault();
-    let name = parseInt(event.currentTarget.name);
-    let position = this.state.tasks.position;
-    let newTasks = this.state.tasks;
-    newTasks.splice(name, 1, this.state.updateTask)
+  updateTask(newTask) {
+    const newTasks = this.state.tasks.slice();
+    const taskIndex = newTasks.findIndex(task => task.id === newTask.id);
+    var editedTask = //new state set here 
+    newTasks.splice(taskIndex, 1, newTask);
     this.setState({
       tasks: newTasks
-    })
+    });
   }
-
-  toggleEditor() {
-    this.setState({
-      hideEditor: !this.state.hideEditor
-    })
-
-  }
-
 
   render() {
     return (
@@ -95,17 +66,12 @@ class App extends Component {
         <h2><small className="text-muted">Track all of the things</small></h2>
         <hr />
         <div className="row">
-          <AddTodo
-            taskChange={this.handleChange}
-            taskEntry={this.handleClick}
-          />
-          <ViewCard tasks={this.state.tasks}
+          <AddTodo taskEntry={this.addTodo} />
+
+          <ViewCard
+            tasks={this.state.tasks}
             removeTask={this.deleteTask}
-            toggleEdit={this.toggleEditor}
-            hideEditor={this.state.hideEditor}
-            taskUpdate={this.state.updateTask}
-            taskEdit={this.editTask}
-            taskHandleChange={this.updateHandleChange}
+            updateTask={this.updateTask}
           />
         </div>
       </div>
