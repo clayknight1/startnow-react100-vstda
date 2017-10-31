@@ -6,7 +6,7 @@ class AddTodo extends Component {
 
         this.state = {
             descriptionValue: '',
-            priorityValue: '0'
+            priorityValue: '1'
         }
 
         this.handleDescription = this.handleDescription.bind(this);
@@ -31,7 +31,7 @@ class AddTodo extends Component {
         this.props.taskEntry(this.state.descriptionValue, this.state.priorityValue);
         this.setState({
             descriptionValue: '',
-            priorityValue: '0'
+            priorityValue: ''
         })
     }
 
@@ -46,7 +46,7 @@ class AddTodo extends Component {
                     <div className="card-body">
                         <label htmlFor="exampleFormControlTextarea1"><strong>I want to...</strong></label>
                         <textarea
-                            className="form-control mb-3"
+                            className="form-control mb-3 create-todo-text" 
                             rows="3"
                             name="text"
                             type="text"
