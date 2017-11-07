@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AddTodo from './AddTask';
-import ViewCard from './viewCard';
+import ViewCard from './ViewCard';
 
 let counter = 0;
 
