@@ -17,8 +17,6 @@ class ViewCard extends Component {
                         removeTask={this.props.removeTask}
                         updateTask={this.props.updateTask}
                     />
-                    
-
                 </div>
             </div>
         )
